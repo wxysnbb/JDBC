@@ -1,4 +1,4 @@
-package cn.wd.web;
+package wd.web;
 
 import com.alibaba.fastjson.JSON;
 
@@ -33,7 +33,7 @@ public abstract class BaseServlet extends HttpServlet{
     /**
      *  因为所有的子 servlet都 需要继承这个BaseServlet
      */
-      public   abstract  Class  getServletClass();
+    public  abstract  Class  getServletClass();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -61,8 +61,6 @@ public abstract class BaseServlet extends HttpServlet{
             }
         }
         toView(request,response,result);
-
-
     }
 
     private void toView(HttpServletRequest request, HttpServletResponse response, Object result) throws ServletException, IOException {
