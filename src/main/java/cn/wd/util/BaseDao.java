@@ -1,6 +1,5 @@
-package wd.util;
+package cn.wd.util;
 
-import java.io.ObjectOutputStream;
 import java.sql.*;
 
 public class BaseDao {
@@ -76,12 +75,5 @@ public class BaseDao {
         }catch (SQLException e){
             e.printStackTrace();
         }
-
-
-
-
-
     }
-
-
 }

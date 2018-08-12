@@ -1,13 +1,24 @@
-package wd.util;
+package cn.wd.util;
+
+import java.util.List;
 
 //简单的分页工具
-public class PageUtil {
+public class PageUtil<E> {
+
+    private List<E> list;
     private int pageIndex;  //当前页
     private int pageSize=2;   //页大小
     private int pageCount;  //页总数
     private int totalCount; //总记录数
 
 
+    public List<E> getList() {
+        return list;
+    }
+
+    public void setList(List<E> list) {
+        this.list = list;
+    }
 
     /**
      * 因为我们已经确定了 页大小
@@ -55,5 +66,8 @@ public class PageUtil {
         this.pageSize = pageSize;
         this.pageCount = pageCount;
         this.totalCount = totalCount;
+    }
+    public PageUtil() {
+
     }
 }

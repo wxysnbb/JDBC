@@ -1,4 +1,4 @@
-package wd.entity;
+package cn.wd.entity;
 
 public class User {
     private Integer uid;    //用户id

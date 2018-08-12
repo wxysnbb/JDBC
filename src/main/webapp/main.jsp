@@ -1,4 +1,5 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -49,7 +50,7 @@
 <div class="row-fluid sortable">
     <div class="box span12">
         <div class="box-header well" data-original-title>
-            <h2><i class="icon-user"></i> Members</h2>
+            <h2><i class="icon-user"></i> ${sessionScope.loginUser.userName}</h2>
             <div class="box-icon">
                 <a href="#" class="btn btn-setting btn-round"><i class="icon-cog"></i></a>
                 <a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
@@ -60,57 +61,34 @@
             <table class="table table-striped table-bordered bootstrap-datatable datatable">
                 <thead>
                 <tr>
-                    <th>Username</th>
-                    <th>Date registered</th>
-                    <th>Role</th>
-                    <th>Status</th>
-                    <th>Actions</th>
+                    <th>用户编号</th>
+                    <th>用户名</th>
                 </tr>
                 </thead>
-                <tbody>
-
-                <tr>
-                    <td>Lorem Ipsum</td>
-                    <td class="center">2012/03/01</td>
-                    <td class="center">Member</td>
-                    <td class="center">
-                        <span class="label label-warning">Pending</span>
-                    </td>
-                    <td class="center">
-                        <a class="btn btn-success" href="add.jsp">
-                            <i class="icon-zoom-in icon-white"></i>
-                            View
-                        </a>
-                        <a class="btn btn-info" href="add.jsp">
-                            <i class="icon-edit icon-white"></i>
-                            Edit
-                        </a>
-                        <a class="btn btn-danger" href="add.jsp">
-                            <i class="icon-trash icon-white"></i>
-                            Delete
-                        </a>
-                    </td>
-                </tr>
-                </tbody>
+                <tbody id="list-content"></tbody>
             </table>
         </div>
     </div><!--/span-->
-
 </div><!--/row-->
+
+<%--引入自己的pagination--%>
+<div class="pagination" id="pagination"></div>
 
 <%-- 模态窗口--%>
 <div class="modal hide fade" id="myModal">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">×</button>
-        <h3>Settings</h3>
+        <h3>温馨提示</h3>
     </div>
     <div class="modal-body">
-        <p>Here settings can be configured...</p>
+        <p>您是否确定删除...</p>
     </div>
     <div class="modal-footer">
-        <a href="#" class="btn" data-dismiss="modal">Close</a>
-        <a href="#" class="btn btn-primary">Save changes</a>
+        <a href="#" class="btn" data-dismiss="modal">关闭</a>
+        <a onclick="realDelete();" class="btn btn-primary">确认删除</a>
     </div>
+    <%--设置隐藏域 获取需要删除的id--%>
+    <input type="hidden" id="deleteId">
 </div>
 
 
@@ -184,5 +162,64 @@
 <!-- application script for Charisma demo -->
 <script src="js/charisma.js"></script>
 
+<%--引入分页插件--%>
+<script src="js/jquery.pagination.js"></script>
+
+<%--ajax分页操作--%>
+<script type="text/javascript">
+    loadData(1);//加载数据  0 当前页
+    function loadData(pageIndex) {//初始化数据的ajax操作
+        $.ajax({
+            url:"/home?methodName=findAllByPage",
+            type:"POST",
+            data:{"pageIndex":pageIndex},
+            success:function (data) {
+                //每次成功清除之前的数据
+                $("#list-content").html("");
+                var data=$.parseJSON(data);
+                //遍历数据
+
+                $.each(data.list,function (i,dom) {
+                    $("#list-content").append(" <tr>\n" +
+                        "  <td>"+dom.uid+"</td>\n" +
+                        "                    <td class=\"center\">"+dom.uname+"</td>\n" +
+                        "                    <td class=\"center\">\n" +
+                        "                        <a class=\"btn btn-danger\" onclick=\"showModal("+dom.uid+");\">\n" +
+                        "                            <i class=\"icon-trash icon-white\"></i>\n" +
+                        "                            删除\n" +
+                        "                        </a>\n" +
+                        "                    </td>\n" +
+                        "                </tr>");
+                });  // each结束
+                //使用分页插件
+                $("#pagination").pagination(data.totalCount,
+                    {
+                        current_page:data.pageIndex, //当前页面
+                        items_per_page:data.pageSize, //每页显示的条目数
+                        prev_text:"上一页",
+                        next_text:"下一页",
+                        callback:loadData //回调函数
+                    });
+            }//success回调函数
+        });
+    };
+    /**
+     * 模态窗口的操作
+     */
+    function  showModal(delId) {
+        //显示模态窗口
+        $("#myModal").modal("show");
+        //给隐藏域赋值
+        $("#deleteId").val(delId);
+    }
+    /**
+     * 真正的删除
+     */
+    function realDelete() {
+        var id= $("#deleteId").val();
+        window.location.href="/home?methodName=deleteUser&id="+id;
+    }
+</script>
 </body>
+
 </html>

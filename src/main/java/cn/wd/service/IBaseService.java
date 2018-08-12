@@ -1,6 +1,6 @@
-package wd.service;
+package cn.wd.service;
 
-import wd.util.PageUtil;
+import cn.wd.util.PageUtil;
 
 import java.io.Serializable;
 import java.util.List;
@@ -12,5 +12,5 @@ public interface IBaseService<T> {
     T findByCondition(Serializable id);
     List<T> findAll();
     int findrownum();
-    List<T> findAllByPage(PageUtil util,Object...obj);
+    List<T> findAllByPage(PageUtil util, Object...obj);
 }

@@ -1,6 +1,7 @@
-package wd.service;
+package cn.wd.service;
 
-import wd.service.user.UserServiceImpl;
+
+import cn.wd.service.user.UserServiceImpl;
 
 /**
  * 什么时候需要工厂模式？
@@ -26,13 +27,13 @@ public class ServiceFactory {
    }
 
    public static IBaseService getServiceImpl(String serviceName){
-       IBaseService service=null;
+       IBaseService  service=null;
        switch (serviceName){
            case "userService":
-               service= new UserServiceImpl();
+               service=  new UserServiceImpl();
            default:
-                break;
+               break;
        }
-        return  service;
+       return  service;
    }
 }

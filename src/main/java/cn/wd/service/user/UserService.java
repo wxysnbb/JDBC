@@ -1,7 +1,12 @@
-package wd.service.user;
+package cn.wd.service.user;
 
-import wd.entity.User;
-import wd.service.IBaseService;
+import cn.wd.entity.User;
+import cn.wd.service.IBaseService;
 
-public interface UserService extends IBaseService<User>{
+
+public interface UserService extends IBaseService<User> {
+    String validateName(String userName);
+
+    User login(String userName, String password);
+
 }

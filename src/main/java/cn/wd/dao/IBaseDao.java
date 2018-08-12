@@ -1,6 +1,6 @@
-package wd.dao;
+package cn.wd.dao;
 
-import wd.util.PageUtil;
+import cn.wd.util.PageUtil;
 
 import java.io.Serializable;
 import java.util.List;
@@ -17,5 +17,5 @@ public interface IBaseDao<T> {
     T findByCondition(Serializable id);
     List<T> findAll();
     int findrownum();
-    List<T> findAllByPage(PageUtil util,Object...obj);
+    List<T> findAllByPage(PageUtil util, Object...obj);
 }

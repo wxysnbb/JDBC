@@ -1,9 +1,9 @@
-package wd.service.user;
+package cn.wd.service.user;
 
-import wd.dao.user.UserDao;
-import wd.dao.user.UserDaoImpl;
-import wd.entity.User;
-import wd.util.PageUtil;
+import cn.wd.dao.user.UserDao;
+import cn.wd.dao.user.UserDaoImpl;
+import cn.wd.entity.User;
+import cn.wd.util.PageUtil;
 
 import java.io.Serializable;
 import java.util.List;
@@ -17,15 +17,34 @@ public class UserServiceImpl implements UserService {
     //耦合 加上 静态代理
     private UserDao userDao=new UserDaoImpl();
 
-
+    /**
+     * 注册
+     */
     @Override
     public int add(User user) {
         return userDao.add(user);
     }
 
+    /**
+     * 验证用户名是否存在
+     */
+    @Override
+    public String validateName(String userName) {
+        return userDao.validateName(userName);
+    }
+
+    /**
+     * 登录
+     */
+    @Override
+    public User login(String userName, String password) {
+        return userDao.login(userName,password);
+    }
+
+
     @Override
     public int deleteByCondition(Serializable id) {
-        return 0;
+        return userDao.deleteByCondition(id);
     }
 
     @Override
@@ -45,11 +64,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int findrownum() {
-        return 0;
+        return userDao.findrownum();
     }
 
     @Override
     public List<User> findAllByPage(PageUtil util, Object... obj) {
-        return null;
+        return userDao.findAllByPage(util,obj);
     }
+
 }

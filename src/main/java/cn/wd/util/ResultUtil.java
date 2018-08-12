@@ -18,6 +18,11 @@ public class ResultUtil {
         this.status=1;
         return this;
     }
+    //成功的方法
+    public ResultUtil resultSuccess(){
+        this.status=1;
+        return this;
+    }
 
     //失败的方法
     public ResultUtil resultFail(String message){
@@ -28,7 +33,7 @@ public class ResultUtil {
 
     public ResultUtil(int status, String message, Object data) {
         this.message=message;
-        this.status=0;
+        this.status=status;
         this.date=data;
     }
 
@@ -58,12 +63,6 @@ public class ResultUtil {
     public void setDate(Object date) {
         this.date = date;
     }
-
-
-
-
-
-
 
 
 

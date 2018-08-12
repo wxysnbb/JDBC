@@ -1,4 +1,4 @@
-package wd.util;
+package cn.wd.util;
 
 import java.io.IOException;
 import java.io.InputStream;
